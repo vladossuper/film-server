@@ -1,4 +1,4 @@
-const Film = require('../../Models/Films');
+const Film = require('../Models/Films');
 
 const setFilmController = async (req, res) => {
   const { title, release_year, format, stars } = req.body;

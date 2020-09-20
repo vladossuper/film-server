@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Film = require('../../Models/Films');
+const Film = require('../Models/Films');
 
 const uploadController = (req, res) => {
   if (req.files === null) {

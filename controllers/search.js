@@ -1,4 +1,4 @@
-const Film = require('../../Models/Films');
+const Film = require('../Models/Films');
 
 const searchController = async (req, res, next) => {
   const { search } = req.body;
