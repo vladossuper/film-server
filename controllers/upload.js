@@ -1,4 +1,6 @@
 const fs = require('fs');
+const path = require('path');
+const mkdirp = require('mkdirp');
 const Film = require('../Models/Films');
 
 const uploadController = (req, res) => {
@@ -6,14 +8,17 @@ const uploadController = (req, res) => {
     return res.status(400).json({ msg: 'No file uploaded' });
   }
   const file = req.files.file;
-  file.mv(`${__dirname}/${file.name}`, err => {
+
+  const reqPath = path.join(__dirname, `../files/${file.name}`);
+  file.mv(reqPath, err => {
+
     if (err) {
       return res.status(500).send(err);
     };
 
-    fs.access(file.name, error => {
+    fs.access(reqPath, error => {
       if (!error) {
-        const string = fs.readFileSync(file.name).toString();
+        const string = fs.readFileSync(reqPath).toString();
 
         const parse = file => {
           const lines = file.split('\r\n');

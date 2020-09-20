@@ -40,7 +40,7 @@ const getFilmController = async (req, res, next) => {
   });
 };
 
-const deleteFilmController = async (req, res) => {
+const deleteFilmController = (req, res) => {
   const { _id } = req.body;
   Film.findOneAndDelete({ _id }, err => {
     if (err) return res.status(500).json({
@@ -53,8 +53,28 @@ const deleteFilmController = async (req, res) => {
   });
 };
 
+const detailsFilmController = (req, res) => {
+  const { _id } = req.body;
+  if (_id) {
+    Film.find({ _id }, (err, film) => {
+      if (film && film.length === 0) res.status(204).json({
+        title: 'No film'
+      });
+      if (film && film.length > 0) res.status(200).json({
+        title: 'Success',
+        film: film[0]
+      });
+      if (err) res.status(500).json({
+        title: 'Server error'
+      });
+    });
+  }
+ 
+};
+
 module.exports = {
   setFilmController,
   getFilmController,
-  deleteFilmController
+  deleteFilmController,
+  detailsFilmController
 };
